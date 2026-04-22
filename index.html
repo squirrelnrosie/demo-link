@@ -3,55 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Direct to Tourist Guardian AI - 觀光AI守護神</title>
+    <title>Tourist Guardian AI - 系統轉接</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @keyframes spin-slow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        :root {
+            /* 參考 CSS 定義的 Design Tokens */
+            --color-primary: #1A73E8;
+            --color-primary-dark: #1557b0;
+            --color-secondary: #34A853;
+            --color-bg: #F8F9FA;
+            --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .animate-spin-slow {
-            animation: spin-slow 3s linear infinite;
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: var(--color-bg);
+            color: #3C4043;
+        }
+
+        /* 參考 CSS 第 11 點：Success Animation */
+        @keyframes scaleBounce {
+            0%   { transform: scale(0); opacity: 0; }
+            60%  { transform: scale(1.2); opacity: 1; }
+            80%  { transform: scale(0.92); }
+            100% { transform: scale(1); }
+        }
+
+        .success-icon-wrap {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(52, 168, 83, 0.12);
+            border: 3px solid var(--color-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: scaleBounce 0.55s var(--transition-bounce) forwards;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            border-radius: 8px; /* 系統標準圓角 */
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
+        }
+
+        /* 脈動光暈效果 */
+        .glow {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            background: rgba(26, 115, 232, 0.15);
+            border-radius: 50%;
+            filter: blur(20px);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(0.95); opacity: 0.5; }
         }
     </style>
 </head>
-<body class="bg-slate-900 text-white flex flex-col items-center justify-center min-h-screen p-6">
+<body class="flex flex-col items-center justify-center min-h-screen p-6">
 
-    <div class="relative flex items-center justify-center mb-8">
-        <div class="absolute w-32 h-32 bg-blue-500 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-        <div class="w-16 h-16 border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+    <div class="relative flex items-center justify-center mb-10">
+        <div class="glow"></div>
+        <div class="success-icon-wrap">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#34A853" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+        </div>
     </div>
 
     <div class="text-center space-y-4 max-w-sm">
-        <h1 class="text-2xl font-bold tracking-tight">系統連線中</h1>
-        <p class="text-slate-400 text-sm leading-relaxed">
-            正在將您導向至 Direct to Tourist Guardian AI - 觀光AI守護神，請確保您的手機已連線至指定的 <span class="text-blue-300 font-semibold">Wi-Fi 熱點</span>。
+        <h1 class="text-2xl font-extrabold tracking-tight text-[#202124]">連線已就緒</h1>
+        <p class="text-[#5F6368] text-sm leading-relaxed">
+            正在引導您進入 <span class="font-bold text-[#1A73E8]">Tourist Guardian AI - 觀光AI守護神</span> 展示環境。
         </p>
+        <div class="bg-blue-50 border border-blue-100 rounded-lg py-2 px-4 inline-block">
+            <p class="text-xs text-blue-700 font-medium">請確保手機已連線至指定的 Wi-Fi 熱點</p>
+        </div>
     </div>
 
-    <div class="mt-10">
-        <a id="link" href="http://192.168.137.1:5173" 
-           class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all active:scale-95">
-            立即進入 Direct to Tourist Guardian AI - 觀光AI守護神
+    <div class="mt-12">
+        <a id="link" href="http://192.168.137.1:4173/report" 
+           class="btn-primary inline-flex items-center px-8 py-4 text-white font-bold shadow-lg active:scale-95">
+            立即進入系統
         </a>
     </div>
 
-    <p class="mt-8 text-xs text-slate-500 italic">
-        * 若自動跳轉未觸發，請點擊上方按鈕
+    <p class="mt-10 text-[11px] text-[#9aa0a6] uppercase tracking-widest font-bold">
+        Redirecting...
     </p>
 
     <script>
         // --- 配置區域 ---
+        // 當天若 IP 有變，直接在 GitHub 修改此處即可
         const TARGET_URL = "http://192.168.137.1:4173/report";
         // ----------------
 
         const linkBtn = document.getElementById('link');
         linkBtn.href = TARGET_URL;
 
-        // 延遲一秒後自動跳轉，給使用者一點心理準備，也顯得比較有質感
+        // 稍微延遲讓動畫完整呈現後跳轉
         setTimeout(() => {
             window.location.href = TARGET_URL;
-        }, 1500);
+        }, 2000);
     </script>
 
 </body>
